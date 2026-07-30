@@ -9,3 +9,7 @@ print(random.randint(-10, 10))    # Random integer in [-10, 10]
 print(random.random())      # float in [0.0, 1.0)
 
 print(random.uniform(10,100))   # float in [10, 100]
+
+numbers = [1, 2, 3, 4, 5]
+random.shuffle(numbers)
+print(numbers)
