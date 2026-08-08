@@ -15,13 +15,8 @@ def main():
     is_on = True
     while is_on:
         clear()
-        # greet the customer
         print("Welcome")
-        
-        # show the menu
         print("Menu:", menu.get_items())
-
-        # take the order
         order = input("What would you like?\n")
         
         if order == "report":
@@ -30,14 +25,10 @@ def main():
         elif order == "off":
             is_on = False
             print("Turning the machine OFF...")
-        elif menu.find_drink(order):
+        else:
             drink = menu.find_drink(order)
-            if coffee_maker.is_resource_sufficient(drink):
-                price = drink.cost
-                if money_machine.make_payment(price):
-                    coffee_maker.make_coffee(drink)
-                else:
-                    break
+            if drink and coffee_maker.is_resource_sufficient(drink) and money_machine.make_payment(drink.cost):
+                coffee_maker.make_coffee(drink)
         
         time.sleep(3)
         clear()
