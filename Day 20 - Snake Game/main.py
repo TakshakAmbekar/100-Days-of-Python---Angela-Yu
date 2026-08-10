@@ -35,7 +35,7 @@ while game_on:
     while not snake.busted():
         
         snake.move()
-        snake.distance(food_spawn.food, food_spawn.create_food)
+        snake.distance(food_spawn, food_spawn.create_food)
         screen.update()
         time.sleep(0.1)
     
