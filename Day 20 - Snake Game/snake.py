@@ -16,6 +16,7 @@ DELTA = {
 SPEED = 1
 
 
+# Inherit Segment from Turtle class
 class Segment(Turtle):
     def __init__(self):
         super().__init__()
@@ -37,27 +38,26 @@ class Snake():
                 segment.color("black", "black")
             segment.teleport(i * -20 + 10, 10)
             self.snake.append(segment)
+            
+            self.head = self.snake[0]
         
-        
+    
+    # Snake Methods
     def move_up(self):
-        head = self.snake[0]
-        if head.heading() != 270:
-            head.setheading(90)
+        if self.head.heading() != 270:
+            self.head.setheading(90)
     
     def move_right(self):
-        head = self.snake[0]
-        if head.heading() != 180:
-            head.setheading(0)
+        if self.head.heading() != 180:
+            self.head.setheading(0)
     
     def move_down(self):
-        head = self.snake[0]
-        if head.heading() != 90:
-            head.setheading(270)
+        if self.head.heading() != 90:
+            self.head.setheading(270)
         
     def move_left(self):
-        head = self.snake[0]
-        if head.heading() != 0:
-            head.setheading(180)
+        if self.head.heading() != 0:
+            self.head.setheading(180)
     
     def move(self):
         snake = self.snake
@@ -65,8 +65,7 @@ class Snake():
         for i in range(length - 1, 0, -1):
             x, y = snake[i - 1].position()
             snake[i].teleport(x, y)
-        head = self.snake[0]
-        head.forward(20)
+        self.head.forward(20)
     
     def grow(self):
         self.score += 1
@@ -87,8 +86,7 @@ class Snake():
         self.snake.append(segment)
         
     def distance(self,food, create_food):
-        head = self.snake[0]
-        if head.distance(food) <= 10:
+        if self.head.distance(food) <= 10:
             self.eat(create_food)
         
     def eat(self,create_food):
@@ -96,13 +94,12 @@ class Snake():
         create_food(self)
     
     def busted(self):
-        head = self.snake[0]
         segment_positions = []
         for segment in self.snake:
             segment_positions.append(segment.position())
-        x, y = head.position()
+        x, y = self.head.position()
         border = 280
-        if head.position() in segment_positions[1:]:
+        if self.head.position() in segment_positions[1:]:
             return True
         if -border < x < border and -border < y < border:
             return False

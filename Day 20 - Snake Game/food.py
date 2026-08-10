@@ -1,6 +1,8 @@
 from random import randrange
 from turtle import Turtle
 
+
+# Inherit Food from Turtle class
 class Food(Turtle):
     def __init__(self):
         super().__init__()
