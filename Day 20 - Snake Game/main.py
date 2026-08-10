@@ -13,6 +13,8 @@ def restart_game():
     screen.clear()
     
 def quit_game():
+    global game_on
+    game_on = False
     screen.bye()
     
 game_on = True
@@ -53,6 +55,6 @@ while game_on:
     screen.onkey(restart_game,"space") 
     screen.onkey(quit_game, "q")
     
-    while not restart:
+    while not restart and game_on:
         screen.update()
         time.sleep(0.1)  

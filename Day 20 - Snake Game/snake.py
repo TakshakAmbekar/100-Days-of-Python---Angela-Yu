@@ -150,5 +150,5 @@ class Snake():
         self.game_over_comment.teleport(0,0)
         self.game_over_comment.write("GAME OVER", align = "center", font = ("Arial", 40, "bold"))
         self.game_over_comment.teleport(0, -30)
-        self.game_over_comment.write("Press space to play again", align = "center", font = ("Arial", 10, "italic"))
+        self.game_over_comment.write("Press 'space' to play again, 'q' to quit", align = "center", font = ("Arial", 10, "italic"))
         
