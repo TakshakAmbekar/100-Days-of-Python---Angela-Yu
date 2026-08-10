@@ -133,7 +133,7 @@ class Snake():
         create_food(self)
     
     def busted(self):
-        for segment in self.snake:
+        for segment in self.snake[1:]:
             if self.head.distance(segment) < 10:
                 return True
         x, y = self.head.position()
@@ -144,7 +144,6 @@ class Snake():
             return True
 
     def game_over(self, screen):
-        screen.clear()
         self.comment.stop()
         self.game_over_comment.teleport(0,0)
         self.game_over_comment.write("GAME OVER", align = "center", font = ("Arial", 40, "bold"))
