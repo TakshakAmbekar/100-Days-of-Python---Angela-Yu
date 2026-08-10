@@ -133,16 +133,15 @@ class Snake():
         create_food(self)
     
     def busted(self):
-        segment_positions = []
         for segment in self.snake:
-            segment_positions.append(segment.position())
+            if self.head.distance(segment) < 10:
+                return True
         x, y = self.head.position()
         border = 280
-        if self.head.position() in segment_positions[1:]:
-            return True
         if -border < x < border and -border < y < border:
             return False
-        return True
+        else:
+            return True
 
     def game_over(self, screen):
         screen.clear()
