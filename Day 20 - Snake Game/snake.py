@@ -15,6 +15,15 @@ DELTA = {
 
 SPEED = 1
 
+
+class Segment(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.penup()
+        self.color("black", "red")
+        self.shape("square")
+        self.speed(SPEED)
+
 class Snake():
     def __init__(self):
         self.snake = []
@@ -23,14 +32,9 @@ class Snake():
         score_keeper.write(f"Score: {self.score}")
         
         for i in range(3):
-            segment = Turtle()
-            segment.speed(SPEED)
-            segment.shape("square")
+            segment = Segment()
             if i == 0:
                 segment.color("black", "black")
-            else:
-                segment.color("black", "red")
-            segment.penup()
             segment.teleport(i * -20 + 10, 10)
             self.snake.append(segment)
         
