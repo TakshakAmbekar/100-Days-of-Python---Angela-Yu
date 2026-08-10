@@ -1,5 +1,5 @@
 from turtle import Turtle, Screen 
-from snake import Snake
+from snake import Snake, ScoreBoard
 from food import Food
 import time
 
@@ -34,8 +34,8 @@ while game_on:
 
     while not snake.busted():
         
-        snake.move()
-        snake.distance(food_spawn, food_spawn.create_food)
+        snake.move(food_spawn, food_spawn.create_food)
+        # snake.distance(food_spawn, food_spawn.create_food)
         screen.update()
         time.sleep(0.1)
     
