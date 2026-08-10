@@ -6,8 +6,19 @@ import time
 BORDER_LENGTH = 300
 
 
+
+def restart_game():
+    global restart
+    restart = True
+    screen.clear()
+    
+def quit_game():
+    screen.bye()
+    
 game_on = True
+
 while game_on:
+    restart = False
     screen = Screen()
     screen.setup(800, 800)
     screen.tracer(0)
@@ -33,14 +44,15 @@ while game_on:
     
 
     while not snake.busted():
-        
         snake.move(food_spawn, food_spawn.create_food)
-        # snake.distance(food_spawn, food_spawn.create_food)
         screen.update()
         time.sleep(0.1)
     
-    game_on = screen.textinput("Game Over!", "Play again? (y/n)".strip().lower()) == 'y'   
-    screen.clear()     
-
-
-screen.bye()
+    snake.game_over(screen)
+    
+    screen.onkey(restart_game,"space") 
+    screen.onkey(quit_game, "q")
+    
+    while not restart:
+        screen.update()
+        time.sleep(0.1)  

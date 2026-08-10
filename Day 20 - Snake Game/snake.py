@@ -1,12 +1,5 @@
 from turtle import Turtle, Screen
-
-
-DELTA = {
-    0: (20, 0),
-    90: (0, 20),
-    180: (-20, 0),
-    270: (0, -20)
-}
+import time
 
 SPEED = 1
 
@@ -23,36 +16,39 @@ class ScoreBoard(Turtle):
     def display(self):
         self.clear()
         self.write(f"Score: {self.score}", font = ("Arial", 10, "normal"))
-    
-scoreboard = ScoreBoard()
-scoreboard.display()
 
 # Display nom nom nom when eating
 class Comment(ScoreBoard):
     def __init__(self):
         super().__init__()
         self.teleport(0, 250)
+        self.running = False
     
     def display(self):
         self.count = 0
+        self.running = True
         self.words = ""
         self.animate()
 
     def animate(self):
         self.clear()
 
-        if self.count < 7:
-            self.words += "NOM "
-            self.write(self.words, align="center")
-            self.count += 1
-            self.getscreen().ontimer(self.animate, 200)
-        elif self.count == 7:
-            self.words += "NOM..."
-            self.write(self.words, align="center")
-            self.count += 1
-            self.getscreen().ontimer(self.clear, 500)
-
-comment = Comment()
+        if self.running:
+            if self.count < 7:
+                self.words += "NOM "
+                self.write(self.words, align="center")
+                self.count += 1
+                self.getscreen().ontimer(self.animate, 200)
+            elif self.count == 7:
+                self.words += "NOM..."
+                self.write(self.words, align="center")
+                self.count += 1
+                self.getscreen().ontimer(self.clear, 500)
+                self.running = False
+    
+    def stop(self):
+        self.running = False
+        self.clear()
 
 
 # Inherit Segment from Turtle class
@@ -67,7 +63,12 @@ class Segment(Turtle):
 class Snake():
     def __init__(self):
         self.snake = []
-        scoreboard.score = 0
+        self.scoreboard = ScoreBoard()
+        self.scoreboard.score = 0
+        self.scoreboard.display()   
+        self.comment = Comment() 
+        self.game_over_comment = Comment()
+        
         
         for i in range(3):
             segment = Segment()
@@ -106,8 +107,8 @@ class Snake():
         self.distance(food, create_food)
     
     def grow(self):
-        scoreboard.score += 1
-        scoreboard.display()
+        self.scoreboard.score += 1
+        self.scoreboard.display()
         tail = self.snake[-1]
         tail_x, tail_y = tail.position()
         
@@ -127,9 +128,8 @@ class Snake():
             self.eat(create_food)
         
     def eat(self,create_food):
-        self.grow()
-        if scoreboard.score > 0:   
-            comment.display()
+        self.grow()  
+        self.comment.display()
         create_food(self)
     
     def busted(self):
@@ -143,4 +143,12 @@ class Snake():
         if -border < x < border and -border < y < border:
             return False
         return True
+
+    def game_over(self, screen):
+        screen.clear()
+        self.comment.stop()
+        self.game_over_comment.teleport(0,0)
+        self.game_over_comment.write("GAME OVER", align = "center", font = ("Arial", 40, "bold"))
+        self.game_over_comment.teleport(0, -30)
+        self.game_over_comment.write("Press space to play again", align = "center", font = ("Arial", 10, "italic"))
         
