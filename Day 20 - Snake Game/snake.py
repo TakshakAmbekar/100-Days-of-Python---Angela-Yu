@@ -82,17 +82,13 @@ class Snake():
         segment.teleport(tail_x, tail_y)
         self.snake.append(segment)
         
-    def distance(self, food_list, create_food):
+    def distance(self,food, create_food):
         head = self.snake[0]
-        food = food_list[0]
         if head.distance(food) <= 10:
-            self.eat(food_list, create_food)
+            self.eat(create_food)
         
-    def eat(self, food_list, create_food):
+    def eat(self,create_food):
         self.grow()
-        old_food = food_list[0]
-        old_food.hideturtle()
-        old_food.teleport((1000, 1000))
         create_food(self)
     
     def busted(self):

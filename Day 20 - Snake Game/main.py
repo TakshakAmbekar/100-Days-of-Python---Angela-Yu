@@ -21,9 +21,9 @@ while game_on:
     border.hideturtle()
     
     snake = Snake()
-    food = Food()
+    food_spawn = Food()
 
-    food.create_food(snake)
+    food_spawn.create_food(snake)
 
     screen.listen()
     screen.onkey(snake.move_up, "w")
@@ -35,7 +35,7 @@ while game_on:
     while not snake.busted():
         
         snake.move()
-        snake.distance(food.food_list, food.create_food)
+        snake.distance(food_spawn.food, food_spawn.create_food)
         screen.update()
         time.sleep(0.1)
     
