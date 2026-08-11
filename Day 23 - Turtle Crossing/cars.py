@@ -15,25 +15,40 @@ class Car(Turtle):
         
     def move(self):
         self.setx(self.xcor() + 10)
-        if self.xcor() > RIGHT:
+        if self.xcor() > RIGHT + 30:
             self.reset_car()
     
     def reset_car(self):
-        x = LEFT - 30
-        y = randrange(BOTTOM + 10, TOP - 10, 30)
-        for car in cars_set:
-            if car.distance(x, y) <= 80 and car.ycor() == y:
-                y = randrange(BOTTOM + 10, TOP - 10, 30)
+        x = randrange(LEFT - 120, LEFT - 30, 10)
+        y = randrange(BOTTOM + 50, TOP - 1, 60)
+        while True:
+            valid_position_found = True
+            for car in cars_set:
+                if car.distance(x, y) <= 150 and car.ycor() == y:
+                    y = randrange(BOTTOM + 50, TOP - 1, 60)
+                    valid_position_found = False
+            
+            if valid_position_found == True:
+                break
+                    
         self.teleport(x, y)
         
             
 # Make the cars spawn on x coordinates as multiples of 10 and y coordinates depending on the number of lanes on the road
 for i in range(20):
     x = randrange(LEFT, RIGHT, 10)
-    y = randrange(BOTTOM + 10, TOP - 10, 30)
-    for car in cars_set:
-        if car.distance(x, y) <= 80 and car.ycor() == y:
-            x = randrange(LEFT, RIGHT, 10)
+    y = randrange(BOTTOM + 50, TOP - 1, 60)
+    while True:
+        valid_position_found = True
+        for car in cars_set:
+            if car.distance(x, y) <= 150 and car.ycor() == y:
+                y = randrange(BOTTOM + 50, TOP - 1, 60)
+                valid_position_found = False
+                break
+        
+        if valid_position_found == True:
+            break
+
     car = Car(x, y)
     car.color(choice(colors))
     cars_set.add(car)

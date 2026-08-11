@@ -12,8 +12,8 @@ class Player(Turtle):
 
     def move_up(self):
         if self.ycor() <= constants.TOP:
-            self.sety(self.ycor() + 10)
+            self.sety(self.ycor() + 20)
     
     def move_down(self):
         if self.ycor() > constants.BOTTOM - 20:
-            self.sety(self.ycor() - 10)
+            self.sety(self.ycor() - 20)

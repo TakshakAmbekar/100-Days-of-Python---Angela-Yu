@@ -1,7 +1,6 @@
-# from screen_setup import screen 
 from screen_setup import screen, road
 from player import Player
-from cars import Car, cars_set
+from cars import cars_set
 import time
 
 
@@ -16,7 +15,7 @@ game_over = False
 
 while not game_over:
     ...
-    time.sleep(0.1)
+    time.sleep(0.05)
     screen.update()
     for car in cars_set:
         car.move()
