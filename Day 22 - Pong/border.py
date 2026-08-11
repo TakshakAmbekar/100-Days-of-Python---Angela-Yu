@@ -17,3 +17,5 @@ class Border(Turtle):
         self.setposition(BORDER_LENGTH / 2, -BORDER_WIDTH / 2)
         self.setposition(-BORDER_LENGTH / 2, -BORDER_WIDTH / 2)
         self.setposition(-BORDER_LENGTH / 2, BORDER_WIDTH / 2)
+        
+        

@@ -4,50 +4,40 @@ from bot import Bot
 from scoreboard import Scoreboard, Result
 from border import Border
 from constants import LEFT, RIGHT
-# from turtle import Turtle
 from screen_setup import screen
 import time
 
 
-restart = True
-
-
 def restart():
-    ...
-    
+    ball.reset()
+    scoreboard.reset()
+    result.reset()
+    paddle_1.reset()
+    paddle_2.reset()
+    bot.reset()
+    main()
 
 def initialize():
-    ...
-    
-
-
-def main():
-    game_over = False
-    
     screen.listen()
+    scoreboard.update(0)
+    screen.update()
     
-    border = Border()
-    border.draw()
+    player_1_name = screen.textinput("Choose player names", "Player 1: ")
+    player_1 = paddle_1
+    player_1.name = player_1_name
     
-    player_1 = screen.textinput("Choose player names", "Player 1: ")
-    player_2 = screen.textinput("Choose player names", "Player 2: ")
-    
-    ball = Ball()
-    paddle_1 = Paddle(LEFT)
-    
-    paddle_1.name = player_1
-    
-    if player_2 == "":
-        bot = Bot()
-        paddle_2 = bot
-        player_2 = "Bot"
-        paddle_2.name = player_2
+    player_2_name = screen.textinput("Choose player names", "Player 2: (Press enter to play against bot)")
+    if player_2_name == "":
+        player_2 = bot
+        bot.showturtle()
+        paddle_2.hideturtle()
     else:
-        paddle_2 = Paddle(RIGHT) 
-    paddle_2.name = player_2
+        player_2 = paddle_2
+        bot.hideturtle()
+        paddle_2.showturtle()
+    player_2.name = player_2_name
     
-    scoreboard = Scoreboard()
-    scoreboard.update()
+    scoreboard.update(0)
     
     screen.onkeypress(paddle_1.move_up, "w")
     screen.onkeypress(paddle_1.move_down, "s")
@@ -55,28 +45,58 @@ def main():
     screen.onkeypress(paddle_2.move_up, "Up")
     screen.onkeypress(paddle_2.move_down, "Down")
     
-    
+    return player_1, player_2
+
+def play(player_1, player_2, game_over):
     while not game_over:
         screen.listen()
-        scoreboard.update()
-        if player_2 == "Bot":
-            bot.move(ball)
-        loser, game_over = ball.move(paddle_1, paddle_2)
+        scoreboard.update(ball.bounce_count)
+        if player_2 == bot:
+            player_2.move(ball)
+        loser, game_over = ball.move(player_1, player_2)
         screen.update()
         time.sleep(0.01)
-        
-    if loser == paddle_1.name: 
-        winner = paddle_2.name
-    else: 
-        winner = paddle_1.name
+    return loser, game_over
+
+
+border = Border()
+border.draw()
+ball = Ball()
+scoreboard = Scoreboard()
+
+paddle_1 = Paddle(LEFT)
+paddle_2 = Paddle(RIGHT)
+bot = Bot()
+result = Result()
+
+def main():
+    game_over = False
     
-    result = Result(loser, winner)
+    player_1, player_2 = initialize()
+        
+    loser, game_over = play(player_1, player_2, game_over)
+
+        
+    if loser == player_1.name: 
+        winner = player_2.name
+    else: 
+        winner = player_1.name
+        
+    result.loser = loser 
+    result.winner = winner
+    
+    
     result.update()
     screen.update()
-    time.sleep(2)
+    
+    time.sleep(1)
             
-    screen.bye()
-
+    wants_restart = screen.textinput("Play another match?", "Press 'y' to play another match, 'q' to quit") == "y"
+    if wants_restart:
+        restart()
+    else:
+        screen.bye()
+        
 
 if __name__ == "__main__":
     main()
