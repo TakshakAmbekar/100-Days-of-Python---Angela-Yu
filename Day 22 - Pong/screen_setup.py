@@ -6,3 +6,16 @@ screen.setup(BORDER_LENGTH + 200, BORDER_WIDTH + 100)
 screen.tracer(0)
 screen.listen()
 screen.bgcolor("black")
+
+root = screen.getcanvas().winfo_toplevel()
+root.attributes("-fullscreen", True)
+
+def exit_fullscreen():
+    root.attributes("-fullscreen", False)
+    
+def enter_fullscreen():
+    root.attributes("-fullscreen", True)
+
+screen.onkey(exit_fullscreen, "Escape")
+screen.onkey(enter_fullscreen, "f")
+screen.listen()

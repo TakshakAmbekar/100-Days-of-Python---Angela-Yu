@@ -39,20 +39,30 @@ def initialize():
     
     scoreboard.update(0)
     
-    screen.onkeypress(paddle_1.move_up, "w")
-    screen.onkeypress(paddle_1.move_down, "s")
+    screen.onkeypress(paddle_1.up_press, "w")
+    screen.onkeyrelease(paddle_1.up_release, "w")
+
+    screen.onkeypress(paddle_1.down_press, "s")
+    screen.onkeyrelease(paddle_1.down_release, "s")
     
-    screen.onkeypress(paddle_2.move_up, "Up")
-    screen.onkeypress(paddle_2.move_down, "Down")
+    if player_2 != bot:
+        screen.onkeypress(player_2.up_press, "Up")
+        screen.onkeyrelease(player_2.up_release, "Up")
+
+        screen.onkeypress(player_2.down_press, "Down")
+        screen.onkeyrelease(player_2.down_release, "Down")
     
     return player_1, player_2
 
 def play(player_1, player_2, game_over):
     while not game_over:
         screen.listen()
+        player_1.move()
         scoreboard.update(ball.bounce_count)
         if player_2 == bot:
             player_2.move(ball)
+        else:
+            player_2.move()
         loser, game_over = ball.move(player_1, player_2)
         screen.update()
         time.sleep(0.01)
