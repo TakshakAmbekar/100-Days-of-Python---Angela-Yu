@@ -1,5 +1,6 @@
 from ball import Ball
 from paddle import Paddle
+from bot import Bot
 from scoreboard import Scoreboard, Result
 from border import Border
 from constants import LEFT, RIGHT
@@ -21,15 +22,17 @@ def main():
     border = Border()
     border.draw()
     
-    player_1 = screen.textinput("Choose player names", "Player 1: ")
-    player_2 = screen.textinput("Choose player names", "Player 2: ")
-    loser = ""
+    # player_1 = screen.textinput("Choose player names", "Player 1: ")
+    # player_2 = screen.textinput("Choose player names", "Player 2: ")
+    # loser = ""
     
     screen.listen()
     
     ball = Ball()
-    paddle1 = Paddle(player_1, LEFT)
-    paddle2 = Paddle(player_2, RIGHT)
+    paddle1 = Paddle("Takshak", LEFT)
+    # paddle2 = Paddle(player_2, RIGHT)
+    bot = Bot()
+    paddle2 = bot
     scoreboard = Scoreboard()
     scoreboard.update()
     
@@ -42,6 +45,8 @@ def main():
     
     while not game_over:
         scoreboard.update()
+        bot.move(ball)
+        print(bot.position())
         loser, game_over = ball.move(paddle1, paddle2)
         screen.update()
         time.sleep(0.01)
