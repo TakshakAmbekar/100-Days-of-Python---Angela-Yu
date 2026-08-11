@@ -2,8 +2,8 @@ from paddle import Paddle
 from constants import RIGHT, BORDER_WIDTH, PADDLE_LENGTH, TURTLE_SIZE
 
 class Bot(Paddle):
-    def __init__(self, name = "Bot", x_pos = RIGHT):
-        super().__init__(name, x_pos)
+    def __init__(self):
+        super().__init__(name = "Bot", x_pos = RIGHT)
         self.teleport(RIGHT, 0)
         
     def move(self, ball):

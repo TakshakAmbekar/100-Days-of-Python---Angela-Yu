@@ -9,50 +9,66 @@ from screen_setup import screen
 import time
 
 
-# t = Turtle()
-# t.hideturtle()
-# t.teleport(-300, 0)
-# t.speed(0)
-# t.color("white")
-# t.setposition(300, 0)
+restart = True
+
+
+def restart():
+    ...
+    
+
+def initialize():
+    ...
+    
+
 
 def main():
     game_over = False
     
+    screen.listen()
+    
     border = Border()
     border.draw()
     
-    # player_1 = screen.textinput("Choose player names", "Player 1: ")
-    # player_2 = screen.textinput("Choose player names", "Player 2: ")
-    # loser = ""
-    
-    screen.listen()
+    player_1 = screen.textinput("Choose player names", "Player 1: ")
+    player_2 = screen.textinput("Choose player names", "Player 2: ")
     
     ball = Ball()
-    paddle1 = Paddle("Takshak", LEFT)
-    # paddle2 = Paddle(player_2, RIGHT)
-    bot = Bot()
-    paddle2 = bot
+    paddle_1 = Paddle(LEFT)
+    
+    paddle_1.name = player_1
+    
+    if player_2 == "":
+        bot = Bot()
+        paddle_2 = bot
+        player_2 = "Bot"
+        paddle_2.name = player_2
+    else:
+        paddle_2 = Paddle(RIGHT) 
+    paddle_2.name = player_2
+    
     scoreboard = Scoreboard()
     scoreboard.update()
     
-    screen.onkeypress(paddle1.move_up, "w")
-    screen.onkeypress(paddle1.move_down, "s")
+    screen.onkeypress(paddle_1.move_up, "w")
+    screen.onkeypress(paddle_1.move_down, "s")
     
-    screen.onkeypress(paddle2.move_up, "Up")
-    screen.onkeypress(paddle2.move_down, "Down")
+    screen.onkeypress(paddle_2.move_up, "Up")
+    screen.onkeypress(paddle_2.move_down, "Down")
     
     
     while not game_over:
+        screen.listen()
         scoreboard.update()
-        bot.move(ball)
-        print(bot.position())
-        loser, game_over = ball.move(paddle1, paddle2)
+        if player_2 == "Bot":
+            bot.move(ball)
+        loser, game_over = ball.move(paddle_1, paddle_2)
         screen.update()
         time.sleep(0.01)
         
-    if loser == player_1: winner = player_2
-    else: winner = player_1
+    if loser == paddle_1.name: 
+        winner = paddle_2.name
+    else: 
+        winner = paddle_1.name
     
     result = Result(loser, winner)
     result.update()

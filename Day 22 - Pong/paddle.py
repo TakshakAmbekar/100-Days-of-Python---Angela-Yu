@@ -3,7 +3,7 @@ from turtle import Turtle
 
 
 class Paddle(Turtle):
-    def __init__(self, name, x_pos):
+    def __init__(self, x_pos, name = "Player"):
         super().__init__()
         self.name = name
         self.penup()

@@ -1,6 +1,7 @@
 from turtle import Turtle
 from constants import BALL_SPEED, BALL_SIZE, BORDER_WIDTH, BORDER_LENGTH, TURTLE_SIZE, PADDLE_LENGTH, PADDLE_THICKNESS
 from random import randint, choice
+from math import sin, cos
 
 
 class Ball(Turtle):
@@ -11,7 +12,11 @@ class Ball(Turtle):
         self.shapesize(BALL_SIZE)
         self.color("white")
         self.speed = BALL_SPEED
-        self.vector = [choice([-1, 1]) * BALL_SPEED * randint(2, 5), choice([-1, 1]) * BALL_SPEED * randint(2, 5)]   
+        self.set_angle()
+        
+    def set_angle(self):
+        angle = randint(30, 60)
+        self.vector = [choice([-1, 1]) * BALL_SPEED * sin(angle), choice([-1, 1]) * BALL_SPEED * cos(angle)]  
         
     def move(self, paddle_1, paddle_2):
         x, y = self.position()
