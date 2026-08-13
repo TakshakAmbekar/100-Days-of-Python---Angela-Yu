@@ -15,7 +15,6 @@ def play():
         time.sleep(0.02 * pow(0.9, level.level))
         if player.move(level.level_up):
             time.sleep(0.5)
-            cars.reset()
         for car in car_set:
             car.move()
             crashed = player.crash(car.position())
